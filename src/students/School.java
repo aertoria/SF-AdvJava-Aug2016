@@ -36,6 +36,11 @@ public class School {
         System.out.println("Unsorted: " + list);        
 //        Collections.sort(list);
         list.sort(null);
-        System.out.println("Sorted: " + list);        
+        System.out.println("Sorted: " + list);   
+        
+//        list.sort(new Student.StudentGPAComparator());
+        list.sort(Student.getGpaComparator());
+        System.out.println("Sorted by gpa: " + list);   
+        
     }
 }

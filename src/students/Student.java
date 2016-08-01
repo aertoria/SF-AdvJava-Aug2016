@@ -1,10 +1,12 @@
 package students;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
 public final class Student implements Comparable<Student> {
+
     private String name;
     private float gpa;
     private Set<String> courses;
@@ -18,11 +20,17 @@ public final class Student implements Comparable<Student> {
 //        this.courses.addAll(Arrays.asList(courses));
 //    }
 //    
-    private Student() {}
-    
-    public static Student getFromNameGpaCourses(String name, float gpa, String ... courses) {
-        if (name == null) throw new IllegalArgumentException("must have a name");
-        if (gpa < 0 || gpa > 4.0F) throw new IllegalArgumentException("invalid gpa");
+
+    private Student() {
+    }
+
+    public static Student getFromNameGpaCourses(String name, float gpa, String... courses) {
+        if (name == null) {
+            throw new IllegalArgumentException("must have a name");
+        }
+        if (gpa < 0 || gpa > 4.0F) {
+            throw new IllegalArgumentException("invalid gpa");
+        }
 //        if (courses.length == 0) throw new IllegalArgumentException("Must take courses");
         Student self = new Student();
         self.name = name;
@@ -32,19 +40,33 @@ public final class Student implements Comparable<Student> {
         return self;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public float getGpa() {
+        return gpa;
+    }
+
+    public Set<String> getCourses() {
+        return courses;
+    }
+
     @Override
     final public boolean equals(Object other) {
-        if (!(other instanceof Student)) return false;
-        Student s2 = (Student)other;
+        if (!(other instanceof Student)) {
+            return false;
+        }
+        Student s2 = (Student) other;
 //        String s = other.name;
         return this.name.equals(s2.name);
     }
-    
+
     @Override
     final public int hashCode() {
         return name.hashCode();
     }
-    
+
     @Override
     public String toString() {
         return "Student{" + "name=" + name + ", gpa=" + gpa + ", courses=" + courses + '}';
@@ -54,5 +76,43 @@ public final class Student implements Comparable<Student> {
     public int compareTo(Student o) {
         return this.name.compareTo(o.name);
     }
+
+//    private static final Comparator<Student> gpaComparator = new
+//             /*private static final class StudentGPAComparator implements*/ Comparator<Student>() {
+//
+//        @Override
+//        public int compare(Student o1, Student o2) {
+//            System.out.println("in anonymous comparator");
+//            return new Float(o1.gpa).compareTo(o2.gpa);
+//        }
+//    };
     
+    private static final Comparator<Student> gpaComparator = 
+            (o1, o2) -> new Float(o1.gpa).compareTo(o2.gpa);
+    
+//    private static final Comparator<Student> gpaComparator = (Student o1, Student o2) -> /*{*/
+//        /*return */new Float(o1.gpa).compareTo(o2.gpa)/*;*/
+//    /*}*/;
+    
+//    private static final Comparator<Student> gpaComparator = /* new Comparator<Student>() {*/
+//
+//        /*@Override
+//        public int compare*/(Student o1, Student o2) -> {
+//            System.out.println("in lambda version 1 comparator");
+//            return new Float(o1.gpa).compareTo(o2.gpa);
+//        }
+//    /*}*/;
+
+    public static Comparator<Student> getGpaComparator() {
+        return gpaComparator;
+    }
+
+//    private static final class StudentGPAComparator implements Comparator<Student> {
+//
+//        @Override
+//        public int compare(Student o1, Student o2) {
+//            System.out.println("in inner comparator");
+//            return new Float(o1.gpa).compareTo(o2.gpa);
+//        }
+//    }
 }
