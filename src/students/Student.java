@@ -5,6 +5,12 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+interface StudentCriterion {
+    //   boolean broken();
+
+    boolean test(Student s);
+}
+
 public final class Student implements Comparable<Student> {
 
     private String name;
@@ -77,6 +83,12 @@ public final class Student implements Comparable<Student> {
         return this.name.compareTo(o.name);
     }
 
+    private static final Comparator<Student> enthusiasmComparator
+            = (o1, o2) -> o1.courses.size() - o2.courses.size();
+
+    public static Comparator<Student> getEnthusiasmComparator() {
+        return enthusiasmComparator;
+    }
 //    private static final Comparator<Student> gpaComparator = new
 //             /*private static final class StudentGPAComparator implements*/ Comparator<Student>() {
 //
@@ -86,14 +98,13 @@ public final class Student implements Comparable<Student> {
 //            return new Float(o1.gpa).compareTo(o2.gpa);
 //        }
 //    };
-    
-    private static final Comparator<Student> gpaComparator = 
-            (o1, o2) -> new Float(o1.gpa).compareTo(o2.gpa);
-    
+
+    private static final Comparator<Student> gpaComparator
+            = (o1, o2) -> Float.compare(o1.gpa, o2.gpa);
+
 //    private static final Comparator<Student> gpaComparator = (Student o1, Student o2) -> /*{*/
 //        /*return */new Float(o1.gpa).compareTo(o2.gpa)/*;*/
 //    /*}*/;
-    
 //    private static final Comparator<Student> gpaComparator = /* new Comparator<Student>() {*/
 //
 //        /*@Override
@@ -102,7 +113,6 @@ public final class Student implements Comparable<Student> {
 //            return new Float(o1.gpa).compareTo(o2.gpa);
 //        }
 //    /*}*/;
-
     public static Comparator<Student> getGpaComparator() {
         return gpaComparator;
     }
@@ -115,4 +125,14 @@ public final class Student implements Comparable<Student> {
 //            return new Float(o1.gpa).compareTo(o2.gpa);
 //        }
 //    }
+    public static StudentCriterion getSmartnessCriterion(float threshold) {
+//         threshold++;
+//        return new StudentCriterion() {
+//            public boolean test(Student s) {
+//                return s.getGpa() > threshold;
+//            }
+//        };
+        return s->s.getGpa() > threshold;
+    }
+
 }
