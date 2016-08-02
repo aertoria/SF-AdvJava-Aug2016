@@ -23,7 +23,22 @@ class SmartnessCriterion implements StudentCriterion {
 
 }
 
+@FunctionalInterface
+interface Criterion<E> {
+    boolean test(E s);
+}
 public class School {
+
+    public static <E> List<E> getByCriterion(Collection<E> input,
+            Criterion<E> criterion) {
+        List<E> output = new ArrayList<>();
+        for (E s : input) {
+            if (criterion.test(s)) {
+                output.add(s);
+            }
+        }
+        return output;
+    }
 
     public static List<Student> getStudentsByCriterion(Collection<Student> input,
             StudentCriterion criterion) {
@@ -98,17 +113,20 @@ public class School {
 //        System.out.println("-----------------------------");
 //        System.out.println("Smarter students: " + getStudentsByCriterion(safeToPassAround,
 //                new SmartnessCriterion(3.2F)));
-
 //        System.out.println("-----------------------------");
 //        System.out.println("Smarter students: " + getStudentsByCriterion(safeToPassAround,
 //                s -> {
 //                    return s.getGpa() > 3.2F;
 //                }));
+//        System.out.println("-----------------------------");
+//        float t = 3.2F;
+//        System.out.println("Smarter students: " + getStudentsByCriterion(safeToPassAround,
+//                Student.getSmartnessCriterion(t)));
+
 
         System.out.println("-----------------------------");
-        float t = 3.2F;
-        System.out.println("Smarter students: " + getStudentsByCriterion(safeToPassAround,
-            Student.getSmartnessCriterion(t)));
+        System.out.println("Smarter students: " + getByCriterion(safeToPassAround,
+                Student.getSmartnessCriterion(3.2F)));
 
     }
 }

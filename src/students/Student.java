@@ -5,7 +5,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-interface StudentCriterion {
+@FunctionalInterface
+interface StudentCriterion extends Criterion<Student> {
     //   boolean broken();
 
     boolean test(Student s);
