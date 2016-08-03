@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class TestCompoundComparators {
     public static void main(String[] args) {
@@ -25,5 +27,10 @@ public class TestCompoundComparators {
                 (o1, o2) -> o1.length() - o2.length(), 
                 (o1, o2) -> o1.compareToIgnoreCase(o2)));
         System.out.println("length then alpha " + strings);
+        
+        Consumer<String> cs = s->System.out.printf("> %14s\n", s);
+        Predicate<String> ps = null;
+        strings.forEach(/*(Consumer<String>)(*/s->System.out.printf("> %14s\n", s)/*)*/);
+        
     }
 }
